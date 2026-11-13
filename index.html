@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Taglia a cinque: edizione midterm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F6F3; --ink:#1A1C20; --muted:#666A72; --line:#D6D9D3;
+  --pencil:#2C4CCB; --pencil-soft:rgba(44,76,203,.12);
+  --place:#1D7A4F; --in:#B9840F; --out:#A3A6AC; --empty:#E9EBE6; --on-color:#FFFFFF;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15171B; --ink:#ECEDEF; --muted:#9A9EA7; --line:#2E3138;
+    --pencil:#8BA2FF; --pencil-soft:rgba(139,162,255,.16);
+    --place:#2E9C68; --in:#CF9E25; --out:#4B4E56; --empty:#20232A; --on-color:#FFFFFF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15171B; --ink:#ECEDEF; --muted:#9A9EA7; --line:#2E3138;
+  --pencil:#8BA2FF; --pencil-soft:rgba(139,162,255,.16);
+  --place:#2E9C68; --in:#CF9E25; --out:#4B4E56; --empty:#20232A; --on-color:#FFFFFF;
+  color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:1rem}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(1.8rem,5vw,2.4rem);margin:0;letter-spacing:-.01em;line-height:1}
+h1 .cut{position:relative;color:var(--muted);font-weight:400}
+h1 .cut::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:3px;background:var(--pencil);transform:rotate(-3deg);border-radius:2px}
+.nav{display:flex;align-items:center;gap:.25rem;font-size:.95rem;color:var(--muted)}
+.nav button{font:inherit;background:none;border:1px solid var(--line);color:var(--ink);width:2.2rem;height:2.2rem;border-radius:6px;cursor:pointer}
+.nav button:disabled{opacity:.35;cursor:default}
+.nav span{min-width:7.5rem;text-align:center}
+.lede{color:var(--muted);margin:1rem 0 0;font-size:1rem}
+.game{display:grid;grid-template-columns:1fr;gap:2rem;margin-top:1.5rem}
+@media (min-width:860px){.game{grid-template-columns:1.1fr 1fr;align-items:start}}
+
+.sentence{font-family:var(--serif);font-size:clamp(1.35rem,4.4vw,2rem);line-height:1.75;margin:0;max-width:34ch}
+.tok{font:inherit;color:inherit;background:none;border:0;padding:0 .14em;margin:0 -.02em;border-radius:4px;cursor:pointer;position:relative;display:inline}
+.tok:hover{background:var(--pencil-soft)}
+.tok:focus-visible{outline:2px solid var(--pencil);outline-offset:1px}
+.tok.sel{box-shadow:inset 0 0 0 2px var(--pencil);background:var(--pencil-soft)}
+.tok.sel::before{content:attr(data-n);position:absolute;top:-.55em;right:-.3em;font-family:var(--sans);font-size:.42em;font-weight:600;line-height:1;background:var(--pencil);color:var(--paper);border-radius:999px;padding:.2em .42em}
+.tok.k-out{color:var(--out)}
+.tok.k-in{text-decoration:underline 2px var(--in);text-underline-offset:.2em}
+.tok.k-place{text-decoration:underline 2px var(--place);text-underline-offset:.2em}
+.tok.strike{color:var(--muted);cursor:default;text-decoration:none}
+.tok.strike:hover{background:none}
+.tok.strike::after{content:"";position:absolute;left:0;top:54%;height:.11em;width:0;background:var(--pencil);border-radius:2px;transform:rotate(-2deg);transition:width .35s ease-out}
+.tok.strike.go::after{width:100%}
+.tok.kept{font-weight:700;cursor:default}
+.tok.kept:hover{background:none}
+.done .tok{cursor:default}
+
+.controls{display:flex;gap:.6rem;margin-top:1.5rem;flex-wrap:wrap}
+.btn{font:inherit;font-weight:500;font-size:.95rem;padding:.65rem 1.1rem;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.btn:focus-visible,.nav button:focus-visible{outline:2px solid var(--pencil);outline-offset:2px}
+.btn.primary{background:var(--pencil);border-color:var(--pencil);color:var(--paper)}
+.btn:disabled{opacity:.4;cursor:default}
+.msg{min-height:1.5rem;margin-top:.9rem;color:var(--muted);font-size:.95rem}
+
+.grid{display:grid;grid-template-rows:repeat(5,auto);gap:.45rem}
+.row{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
+.tile{min-height:3.3rem;border-radius:5px;background:var(--empty);display:flex;align-items:center;justify-content:center;text-align:center;padding:.25rem;font-size:clamp(.72rem,2.6vw,.95rem);font-weight:500;overflow-wrap:anywhere;line-height:1.15}
+.tile.pending{background:transparent;box-shadow:inset 0 0 0 2px var(--pencil);color:var(--ink)}
+.tile.place{background:var(--place);color:var(--on-color)}
+.tile.in{background:var(--in);color:var(--on-color)}
+.tile.out{background:var(--out);color:var(--on-color)}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.8rem;font-size:.85rem;color:var(--muted)}
+.legend i{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;vertical-align:-.1em;margin-right:.35rem}
+
+.end{margin-top:1.75rem;border-top:1px solid var(--line);padding-top:1.25rem;max-width:34rem}
+.end h2{font-family:var(--serif);font-size:1.4rem;margin:0 0 .5rem}
+.end .answer{font-family:var(--serif);font-size:1.25rem;margin:0 0 .75rem}
+.end p{line-height:1.55;margin:0 0 1rem}
+.share-fallback{width:100%;font-family:var(--sans);font-size:.9rem;padding:.6rem;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);margin-top:.75rem}
+.en{margin:0 0 1rem;color:var(--muted)}.en summary{cursor:pointer;font-size:.9rem}.en p{margin:.6rem 0 0}
+@media (prefers-reduced-motion: reduce){.tok.strike::after{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Taglia <span class="cut">tutto</span> a cinque</h1>
+    <div class="nav">
+      <button id="prev" aria-label="Frase precedente">‹</button>
+      <span id="label">Frase 1 di 7</span>
+      <button id="next" aria-label="Frase successiva">›</button>
+    </div>
+  </header>
+  <p class="lede">Edizione midterm, dai risultati del 3 novembre. Tocca cinque parole della frase, nell’ordine in cui vanno lette, in modo da conservarne il senso. Hai cinque tentativi.</p>
+
+  <div class="game">
+    <div id="left">
+      <p class="sentence" id="sentence"></p>
+      <div class="controls" id="controls">
+        <button class="btn" id="undo">Annulla</button>
+        <button class="btn" id="clear">Cancella</button>
+        <button class="btn primary" id="submit">Invia</button>
+      </div>
+      <div class="msg" id="msg" aria-live="polite"></div>
+      <div id="end"></div>
+    </div>
+    <div>
+      <div class="grid" id="grid"></div>
+      <div class="legend">
+        <span><i style="background:var(--place)"></i>Parola giusta, posto giusto</span>
+        <span><i style="background:var(--in)"></i>Parola giusta, posto sbagliato</span>
+        <span><i style="background:var(--out)"></i>Non è nella risposta</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PUZZLES = [
+  {
+    s: "Martedì il controllo di Camera e Senato è passato ai democratici, che hanno strappato ai repubblicani sette seggi al Senato e più di due dozzine di distretti alla Camera, in una delle elezioni di metà mandato più squilibrate della storia moderna.",
+    a: ["camera","e","senato","ai","democratici"], ad: "Camera e Senato ai democratici",
+    alts: [],
+    why: "Le cifre dicono quanto è stata ampia la vittoria, ma il fatto su cui si regge tutto è il controllo di entrambe le camere. «Squilibrate» è una tentazione, ma resta un contorno.",
+    en: "On Tuesday, control of the House and Senate passed to the Democrats, who took seven Senate seats and more than two dozen House districts from Republicans in one of the most lopsided midterms in modern history.",
+    enA: "House and Senate to the Democrats",
+    enWhy: "The numbers show how big the win was, but control of both chambers is the fact everything hangs on. “Lopsided” is tempting, but it’s garnish."
+  },
+  {
+    s: "Dopo quasi un secolo senza un senatore democratico, il Kansas ha eletto Adam Hamilton, uno dei sette seggi repubblicani strappati dai democratici dal Texas al Maine.",
+    a: ["kansas","democratico","dopo","un","secolo"], ad: "Kansas democratico dopo un secolo",
+    alts: [["senatore","democratico","dopo","un","secolo"]],
+    why: "Il trucco è che la risposta sta dentro una negazione: tieni «dopo» e «democratico», lasci «senza». Il secolo di attesa è la notizia; il nome del vincitore conta meno fuori dal Kansas.",
+    en: "After almost a century without a Democratic senator, Kansas elected Adam Hamilton, one of seven Republican seats Democrats took from Texas to Maine.",
+    enA: "Kansas Democratic after a century",
+    enWhy: "The answer hides inside a negation: keep “after” and “Democratic,” drop “without.” The century-long wait is the news; the winner’s name matters less outside Kansas."
+  },
+  {
+    s: "Abdul El-Sayed ha battuto il repubblicano Mike Rogers in Michigan dopo una delle campagne più aspre dell'anno, e sarà il primo musulmano mai eletto al Senato degli Stati Uniti.",
+    a: ["primo","musulmano","eletto","al","senato"], ad: "Primo musulmano eletto al Senato",
+    alts: [["el-sayed","primo","musulmano","al","senato"]],
+    why: "Due notizie si contendono le cinque parole: un seggio difeso dopo una campagna durissima e una prima volta nella storia del Senato. La seconda è quella che si citerà fra cinquant’anni.",
+    en: "Abdul El-Sayed beat Republican Mike Rogers in Michigan after one of the year’s harshest campaigns, and will be the first Muslim ever elected to the US Senate.",
+    enA: "First Muslim elected to the Senate",
+    enWhy: "Two stories compete: a seat held after a brutal campaign, and a first in the Senate’s history. The second is the one people will still cite in fifty years."
+  },
+  {
+    s: "In Texas Ken Paxton è stato battuto da James Talarico, il primo democratico a vincere una carica statale lì da 32 anni, mentre il partito conquistava anche la Camera texana per la prima volta da oltre vent'anni.",
+    a: ["texas","paxton","battuto","da","talarico"], ad: "Texas, Paxton battuto da Talarico",
+    alts: [],
+    why: "Il record dei 32 anni rende la vittoria notevole, ma in cinque parole non ci stanno insieme il record e lo Stato. I nomi bastano: chi ha seguito la corsa sa cosa significa Paxton battuto in Texas.",
+    en: "In Texas, Ken Paxton was beaten by James Talarico, the first Democrat to win statewide office there in 32 years, while the party also won the Texas House for the first time in over twenty years.",
+    enA: "Texas: Paxton beaten by Talarico",
+    enWhy: "The 32-year streak makes it remarkable, but five words can’t hold both the streak and the state. The names do the work: anyone following the race knows what Paxton losing Texas means."
+  },
+  {
+    s: "In Maine la repubblicana Susan Collins è stata battuta da Troy Jackson dopo quasi trent'anni al Senato, e il suo seggio va al primo democratico eletto dallo Stato dal 1995.",
+    a: ["maine","collins","battuta","dopo","trent'anni"], ad: "Maine, Collins battuta dopo trent’anni",
+    alts: [["collins","battuta","da","troy","jackson"]],
+    why: "«Battuta» basta a dire che il seggio era suo. I trent’anni sono ciò che la faceva sembrare intoccabile, ed è questo che fa notizia.",
+    en: "In Maine, Republican Susan Collins was beaten by Troy Jackson after nearly thirty years in the Senate, and her seat goes to the first Democrat the state has elected since 1995.",
+    enA: "Maine: Collins beaten after thirty years",
+    enWhy: "“Beaten” already says the seat was hers. The thirty years are what made her seem untouchable, and that’s the news."
+  },
+  {
+    s: "Mercoledì pomeriggio, con lo spoglio ancora in corso, i repubblicani non avevano strappato nemmeno un seggio ai democratici, che ne avevano già conquistati sette al Senato, almeno 24 distretti alla Camera e cinque governatori.",
+    a: ["repubblicani","nemmeno","un","seggio","strappato"], ad: "Repubblicani, nemmeno un seggio strappato",
+    alts: [],
+    why: "Le conquiste democratiche compaiono in tutte le altre frasi; questa aggiunge che nulla è andato nella direzione opposta. La camicia blu ha continuato a schiaffeggiare, quella rossa non ne ha assestato nemmeno uno.",
+    en: "On Wednesday afternoon, with counting still underway, Republicans hadn’t taken a single seat from Democrats, who had already won seven Senate seats, at least 24 House districts and five governorships.",
+    enA: "Republicans: not a single seat taken",
+    enWhy: "Every other puzzle covers the Democratic gains; this one adds that nothing went the other way. Blue shirt kept slapping; red shirt never landed one."
+  },
+  {
+    s: "Quella delle midterm di martedì è stata una batosta per i repubblicani, che hanno perso entrambe le camere del Congresso, sette seggi al Senato e più di due dozzine di distretti alla Camera, in una disfatta dal Texas al Maine.",
+    a: ["midterm","batosta","per","i","repubblicani"], ad: "Midterm, batosta per i repubblicani",
+    alts: [["una","batosta","per","i","repubblicani"]],
+    why: "«Batosta» porta già con sé la portata della sconfitta, quindi le cifre sono superflue. «Disfatta» dice la stessa cosa, ma «batosta» è la parola che sceglierebbe un titolista.",
+    en: "Tuesday’s midterms were a shellacking for Republicans, who lost both chambers of Congress, seven Senate seats and more than two dozen House districts in a rout from Texas to Maine.",
+    enA: "Midterms: shellacking for the Republicans",
+    enWhy: "“Shellacking” already carries the scale, so the numbers are surplus. “Rout” says the same thing, but “shellacking” is the word a headline writer would pick."
+  }
+];
+
+const KEY = "taglia-a-cinque-midterm-v1";
+const norm = t => t.toLowerCase().replace(/[’‘]/g,"'").replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
+const clean = t => t.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
+
+let store = { cur:0, p:{} };
+try { const raw = localStorage.getItem(KEY); if (raw) store = Object.assign(store, JSON.parse(raw)); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e) {} };
+
+let sel = [];
+let justFinished = false;
+const $ = id => document.getElementById(id);
+const tokens = () => PUZZLES[store.cur].s.split(" ");
+const st = () => (store.p[store.cur] ||= { g:[], done:false, won:false, keep:[] });
+
+function score(guess, answer){
+  const res = Array(5).fill("out"), counts = {};
+  answer.forEach((w,i) => { if (guess[i] === w) res[i] = "place"; else counts[w] = (counts[w]||0) + 1; });
+  guess.forEach((w,i) => { if (res[i] !== "place" && counts[w] > 0) { res[i] = "in"; counts[w]--; } });
+  return res;
+}
+
+function knowledge(){
+  const rank = { out:1, in:2, place:3 }, k = {};
+  for (const row of st().g) row.w.forEach((w,i) => {
+    const n = norm(w), r = row.r[i];
+    if (!k[n] || rank[r] > rank[k[n]]) k[n] = r;
+  });
+  return k;
+}
+
+function render(){
+  const s = st(), toks = tokens(), k = knowledge();
+  $("label").textContent = `Frase ${store.cur+1} di ${PUZZLES.length}`;
+  $("prev").disabled = store.cur === 0;
+  $("next").disabled = store.cur === PUZZLES.length - 1;
+
+  const sent = $("sentence");
+  sent.innerHTML = "";
+  sent.classList.toggle("done", s.done);
+  toks.forEach((t,i) => {
+    const b = document.createElement("button");
+    b.className = "tok";
+    b.textContent = t.replace(/'/g,"’");
+    if (s.done) {
+      if (s.keep.includes(i)) b.classList.add("kept");
+      else { b.classList.add("strike"); if (!justFinished) b.classList.add("go"); }
+      b.tabIndex = -1;
+    } else {
+      const kn = k[norm(t)];
+      if (kn) b.classList.add("k-" + kn);
+      const pos = sel.indexOf(i);
+      if (pos >= 0) { b.classList.add("sel"); b.dataset.n = pos + 1; b.setAttribute("aria-pressed","true"); }
+      else b.setAttribute("aria-pressed","false");
+      b.addEventListener("click", () => toggle(i));
+    }
+    sent.appendChild(b);
+    if (i < toks.length - 1) sent.appendChild(document.createTextNode(" "));
+  });
+
+  if (s.done && justFinished) {
+    const strikes = [...sent.querySelectorAll(".strike")];
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      strikes.forEach((el,j) => setTimeout(() => el.classList.add("go"), j * 45));
+    }));
+    justFinished = false;
+  }
+
+  const grid = $("grid");
+  grid.innerHTML = "";
+  for (let r = 0; r < 5; r++) {
+    const row = document.createElement("div");
+    row.className = "row";
+    for (let c = 0; c < 5; c++) {
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      if (r < s.g.length) { tile.textContent = s.g[r].w[c]; tile.classList.add(s.g[r].r[c]); }
+      else if (r === s.g.length && !s.done && sel[c] !== undefined) { tile.textContent = clean(toks[sel[c]]).replace(/'/g,"’"); tile.classList.add("pending"); }
+      row.appendChild(tile);
+    }
+    grid.appendChild(row);
+  }
+
+  $("controls").style.display = s.done ? "none" : "flex";
+  $("undo").disabled = sel.length === 0;
+  $("clear").disabled = sel.length === 0;
+  $("submit").disabled = sel.length !== 5;
+  if (!s.done && $("msg").dataset.sticky !== "1") $("msg").textContent = sel.length ? `Ancora ${5 - sel.length}.` : (s.g.length ? (5 - s.g.length === 1 ? "Ti resta un tentativo." : `Ti restano ${5 - s.g.length} tentativi.`) : "");
+  $("msg").dataset.sticky = "";
+  if (s.done) $("msg").textContent = "";
+
+  renderEnd();
+}
+
+function renderEnd(){
+  const s = st(), p = PUZZLES[store.cur], end = $("end");
+  if (!s.done) { end.innerHTML = ""; return; }
+  const ans = p.ad;
+  const head = s.won ? `Risolto in ${s.g.length}.` : "Tentativi esauriti.";
+  const altNote = s.won && s.alt ? `<p>Questo taglio è una variante accettata. Quello previsto era «${ans}».</p>` : "";
+  end.innerHTML = `
+    <div class="end">
+      <h2>${head}</h2>
+      <p class="answer">${s.won && !s.alt ? "" : "Risposta: "}«${ans}»</p>
+      ${altNote}
+      <p>${p.why}</p>
+      <details class="en"><summary>English</summary>
+        <p><em>${p.en}</em></p>
+        <p>Answer: “${p.enA}” (${p.ad})</p>
+        <p>${p.enWhy}</p>
+      </details>
+      <div class="controls">
+        <button class="btn" id="copy">Copia risultato</button>
+        ${store.cur < PUZZLES.length - 1 ? '<button class="btn primary" id="go-next">Prossima frase</button>' : ""}
+        <button class="btn" id="reset">Rigioca</button>
+      </div>
+      <div id="share-slot"></div>
+    </div>`;
+  $("copy").addEventListener("click", copyResult);
+  const gn = $("go-next"); if (gn) gn.addEventListener("click", () => go(1));
+  $("reset").addEventListener("click", () => { delete store.p[store.cur]; sel = []; save(); render(); });
+}
+
+function copyResult(){
+  const s = st();
+  const map = { place:"🟩", in:"🟨", out:"⬛" };
+  const text = `Taglia a cinque, midterm ${store.cur+1}: ${s.won ? s.g.length : "X"}/5\n` + s.g.map(r => r.r.map(x => map[x]).join("")).join("\n");
+  const fallback = () => {
+    const ta = document.createElement("textarea");
+    ta.className = "share-fallback"; ta.rows = 7; ta.value = text; ta.readOnly = true;
+    $("share-slot").innerHTML = ""; $("share-slot").appendChild(ta); ta.select();
+  };
+  try {
+    navigator.clipboard.writeText(text).then(() => { $("copy").textContent = "Copiato"; }, fallback);
+  } catch(e) { fallback(); }
+}
+
+function toggle(i){
+  if (st().done) return;
+  const pos = sel.indexOf(i);
+  if (pos >= 0) sel.splice(pos,1);
+  else if (sel.length < 5) sel.push(i);
+  render();
+}
+
+function submit(){
+  const s = st(), p = PUZZLES[store.cur], toks = tokens();
+  if (s.done || sel.length !== 5) return;
+  const words = sel.map(i => norm(toks[i]));
+  if (s.g.some(row => row.w.map(norm).join(" ") === words.join(" "))) {
+    $("msg").textContent = "Hai già provato questo taglio."; $("msg").dataset.sticky = "1"; render(); return;
+  }
+  const isMain = words.join(" ") === p.a.join(" ");
+  const isAlt = !isMain && p.alts.some(a => a.join(" ") === words.join(" "));
+  const r = (isMain || isAlt) ? Array(5).fill("place") : score(words, p.a);
+  s.g.push({ w: sel.map(i => clean(toks[i]).replace(/'/g,"’")), r });
+  if (isMain || isAlt) { s.done = true; s.won = true; s.alt = isAlt; s.keep = sel.slice(); }
+  else if (s.g.length >= 5) {
+    s.done = true; s.won = false;
+    const used = new Set(); s.keep = [];
+    p.a.forEach(w => { const idx = toks.findIndex((t,j) => !used.has(j) && norm(t) === w); if (idx >= 0) { used.add(idx); s.keep.push(idx); } });
+  }
+  if (s.done) justFinished = true;
+  sel = [];
+  save(); render();
+}
+
+function go(d){
+  const n = store.cur + d;
+  if (n < 0 || n >= PUZZLES.length) return;
+  store.cur = n; sel = []; save(); render();
+  window.scrollTo({ top: 0 });
+}
+
+$("undo").addEventListener("click", () => { sel.pop(); render(); });
+$("clear").addEventListener("click", () => { sel = []; render(); });
+$("submit").addEventListener("click", submit);
+$("prev").addEventListener("click", () => go(-1));
+$("next").addEventListener("click", () => go(1));
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "TEXTAREA") return;
+  if (e.key === "Enter" && sel.length === 5) { e.preventDefault(); submit(); }
+  else if (e.key === "Backspace" && sel.length) { e.preventDefault(); sel.pop(); render(); }
+});
+render();
+</script>
+</body>
+</html>
