@@ -75,7 +75,7 @@ h1 .cut::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:3p
 
 .grid{display:grid;grid-template-rows:repeat(5,auto);gap:.45rem}
 .row{display:grid;grid-template-columns:repeat(5,1fr);gap:.45rem}
-.tile{min-height:3.3rem;border-radius:5px;background:var(--empty);display:flex;align-items:center;justify-content:center;text-align:center;padding:.25rem;font-size:clamp(.72rem,2.6vw,.95rem);font-weight:500;overflow-wrap:anywhere;line-height:1.15}
+.tile{min-height:3.3rem;border-radius:5px;background:var(--empty);display:flex;align-items:center;justify-content:center;text-align:center;padding:.25rem;font-size:clamp(.72rem,2.6vw,.95rem);font-weight:500;white-space:nowrap;overflow:hidden;line-height:1.15}
 .tile.pending{background:transparent;box-shadow:inset 0 0 0 2px var(--pencil);color:var(--ink)}
 .tile.place{background:var(--place);color:var(--on-color)}
 .tile.in{background:var(--in);color:var(--on-color)}
@@ -131,38 +131,38 @@ const PUZZLES = [
   {
     s: "Ai democratici, che hanno strappato ai repubblicani otto seggi al Senato e oltre quaranta distretti alla Camera con quello che finora è il margine più ampio nel voto popolare in un'elezione di metà mandato dal 1974, va ora il controllo di tutto il Congresso.",
     a: ["camera", "e", "senato", "ai", "democratici"], ad: "Camera e Senato ai democratici",
-    alts: [["tutto", "il", "congresso", "ai", "democratici"]],
-    why: "Le cifre dicono quanto è stata ampia la vittoria, ma la notizia è il controllo di entrambe le camere. La frase comincia dalla fine del titolo, quindi va rimontata. Accettiamo anche «Tutto il Congresso ai democratici».",
+    alts: [["tutto", "il", "congresso", "ai", "democratici"], ["senato", "e", "camera", "ai", "democratici"]],
+    why: "Le cifre dicono quanto è stata ampia la vittoria, ma la notizia è il controllo di entrambe le camere. La frase comincia dalla fine del titolo, quindi va rimontata. Accettiamo anche «Senato e Camera ai democratici» e «Tutto il Congresso ai democratici».",
     en: "To the Democrats, who took eight Senate seats and more than forty House districts from Republicans with what is so far the widest popular-vote margin in a midterm since 1974, now goes control of all of Congress.",
     enA: "House and Senate to the Democrats",
-    enWhy: "The numbers show how big the win was, but the news is control of both chambers. The sentence starts where the headline ends, so it has to be reassembled. “All of Congress to the Democrats” is also accepted."
+    enWhy: "The numbers show how big the win was, but the news is control of both chambers. The sentence starts where the headline ends, so it has to be reassembled. “Senate and House to the Democrats” and “All of Congress to the Democrats” are also accepted."
   },
   {
     s: "Dopo quasi un secolo senza un senatore democratico, il Kansas ha eletto Adam Hamilton, uno degli otto seggi repubblicani strappati dai democratici dal Texas al Maine.",
-    a: ["kansas","democratico","dopo","un","secolo"], ad: "Kansas democratico dopo un secolo",
-    alts: [["senatore","democratico","dopo","un","secolo"]],
-    why: "Il trucco è che la risposta sta dentro una negazione: tieni «dopo» e «democratico», lasci «senza». Il secolo di attesa è la notizia; il nome del vincitore conta meno fuori dal Kansas.",
+    a: ["kansas", "democratico", "dopo", "un", "secolo"], ad: "Kansas democratico dopo un secolo",
+    alts: [["senatore", "democratico", "dopo", "un", "secolo"], ["dopo", "un", "secolo", "kansas", "democratico"]],
+    why: "Il trucco è che la risposta sta dentro una negazione: tieni «dopo» e «democratico», lasci «senza». Il secolo di attesa è la notizia; il nome del vincitore conta meno fuori dal Kansas. Vale anche «Dopo un secolo, Kansas democratico».",
     en: "After almost a century without a Democratic senator, Kansas elected Adam Hamilton, one of eight Republican seats Democrats took from Texas to Maine.",
     enA: "Kansas Democratic after a century",
-    enWhy: "The answer hides inside a negation: keep “after” and “Democratic,” drop “without.” The century-long wait is the news; the winner’s name matters less outside Kansas."
+    enWhy: "The answer hides inside a negation: keep “after” and “Democratic,” drop “without.” The century-long wait is the news; the winner’s name matters less outside Kansas. “After a century, Kansas Democratic” is also accepted."
   },
   {
-    s: "Sarà il primo musulmano mai eletto al Senato degli Stati Uniti: Abdul El-Sayed ha battuto il repubblicano Mike Rogers in Michigan dopo una delle campagne più aspre dell'anno.",
+    s: "Abdul El-Sayed, che ha battuto il repubblicano Mike Rogers in Michigan dopo una delle campagne più aspre dell'anno, sarà al Senato degli Stati Uniti il primo musulmano mai eletto.",
     a: ["el-sayed", "primo", "musulmano", "al", "senato"], ad: "El-Sayed primo musulmano al Senato",
-    alts: [],
-    why: "Il primato è la notizia, ma un titolo vuole anche il nome: «El-Sayed» si guadagna il posto di «eletto». La frase mette il primato in testa e il nome dopo, quindi va rimontata.",
-    en: "He will be the first Muslim ever elected to the US Senate: Abdul El-Sayed beat Republican Mike Rogers in Michigan after one of the year’s harshest campaigns.",
+    alts: [["primo", "musulmano", "eletto", "al", "senato"]],
+    why: "Il primato è la notizia, e un titolo vuole anche il nome. La frase mette il nome all’inizio e il primato in fondo, quindi va rimontata. Vale anche «Primo musulmano eletto al Senato».",
+    en: "Abdul El-Sayed, who beat Republican Mike Rogers in Michigan after one of the year’s harshest campaigns, will be the first Muslim ever elected to the US Senate.",
     enA: "El-Sayed first Muslim in the Senate",
-    enWhy: "The first is the news, but a headline also wants the name: “El-Sayed” earns the slot that “elected” would take. The sentence puts the first up front and the name after, so it has to be reassembled."
+    enWhy: "The first is the news, and a headline also wants the name. The sentence puts the name at the start and the first at the end, so it has to be reassembled. “First Muslim elected to the Senate” is also accepted."
   },
   {
     s: "Un senatore afroamericano, il primo eletto nello Stato dal 1874, e un democratico, il primo dal 1982: è quello che il Mississippi ritrova con Scott Colom, che ha battuto di stretta misura la senatrice Cindy Hyde-Smith in uno Stato vinto da Trump con 23 punti di vantaggio nel 2024.",
     a: ["mississippi", "ritrova", "un", "senatore", "afroamericano"], ad: "Mississippi ritrova un senatore afroamericano",
-    alts: [],
-    why: "La notizia storica è il senatore afroamericano, e «ritrova» è la parola che la rende precisa: il Mississippi ne aveva già avuti due durante la Ricostruzione, Hiram Revels e Blanche Bruce. «Primo» da solo farebbe pensare al primo in assoluto. Il democratico dal 1982 è l’esca.",
+    alts: [["mississippi", "ritrova", "un", "senatore", "democratico"]],
+    why: "La notizia storica è il senatore afroamericano, e «ritrova» è la parola che la rende precisa: il Mississippi ne aveva già avuti due durante la Ricostruzione, Hiram Revels e Blanche Bruce. «Primo» da solo farebbe pensare al primo in assoluto. Vale anche «Mississippi ritrova un senatore democratico», che è vero ma meno storico.",
     en: "A Black senator, the first elected from the state since 1874, and a Democrat, the first since 1982: that is what Mississippi gets back with Scott Colom, who narrowly beat Senator Cindy Hyde-Smith in a state Trump won by 23 points in 2024.",
     enA: "Mississippi gets a Black senator again",
-    enWhy: "The historic news is the Black senator, and “ritrova” (finds again) is the word that makes it precise: Mississippi had two during Reconstruction, Hiram Revels and Blanche Bruce. “First” on its own would suggest the first ever. The Democrat-since-1982 line is the decoy."
+    enWhy: "The historic news is the Black senator, and “ritrova” (finds again) is the word that makes it precise: Mississippi had two during Reconstruction, Hiram Revels and Blanche Bruce. “First” on its own would suggest the first ever. “Mississippi gets a Democratic senator again” is also accepted: true, but less historic."
   },
   {
     s: "Il 3 novembre Trump si diceva «assolutamente disposto» ad accettare i risultati; ora, rilanciando sui social vecchi sospetti sulle macchine per il voto, dubita apertamente della regolarità delle elezioni.",
@@ -176,24 +176,24 @@ const PUZZLES = [
   {
     s: "Otto seggi al Senato, oltre quaranta distretti alla Camera, il controllo di entrambe le camere del Congresso: per i repubblicani le midterm del 3 novembre sono state una batosta, una disfatta dal Texas al Maine.",
     a: ["midterm", "batosta", "per", "i", "repubblicani"], ad: "Midterm, batosta per i repubblicani",
-    alts: [["una", "batosta", "per", "i", "repubblicani"]],
-    why: "«Batosta» porta già con sé la portata della sconfitta, quindi le cifre sono superflue. «Disfatta» dice la stessa cosa, ma «batosta» è la parola che sceglierebbe un titolista. «Per i repubblicani» arriva prima e va spostato in fondo.",
+    alts: [["una", "batosta", "per", "i", "repubblicani"], ["per", "i", "repubblicani", "una", "batosta"], ["midterm", "disfatta", "per", "i", "repubblicani"], ["una", "disfatta", "per", "i", "repubblicani"]],
+    why: "«Batosta» porta già con sé la portata della sconfitta, quindi le cifre sono superflue. «Per i repubblicani» arriva prima e va spostato in fondo. Valgono anche le versioni con «disfatta» e «Per i repubblicani una batosta».",
     en: "Eight Senate seats, more than forty House districts, control of both chambers of Congress: for Republicans the November 3 midterms were a shellacking, a rout from Texas to Maine.",
     enA: "Midterms: a shellacking for the Republicans",
-    enWhy: "“Shellacking” already carries the scale, so the numbers are surplus. “Rout” says the same thing, but “shellacking” is the word a headline writer would pick. “For the Republicans” comes first and has to move to the end."
+    enWhy: "“Shellacking” already carries the scale, so the numbers are surplus. “For the Republicans” comes first and has to move to the end. Versions with “rout” and “For the Republicans, a shellacking” are also accepted."
   },
   {
-    s: "Fuori programma, lo zio Jon non vede l'ora di andarla a trovare: Stefano e Anita hanno avuto una bambina, Nadia, e chi l'ha vista giura che è la più carina del mondo.",
+    s: "Fuori programma, lo zio Jon non vede l'ora di andarla a trovare: chi l'ha vista giura che al mondo non esiste una bambina più carina, ed è Nadia, la figlia appena nata di Stefano e Anita.",
     a: ["nadia", "la", "bambina", "più", "carina"], ad: "Nadia, la bambina più carina",
     alts: [],
-    why: "Qui la politica non c’entra: la notizia è Nadia, che però arriva solo a metà frase. La trappola è «del mondo», giustissimo ma troppo lungo; e «Zio Jon non vede l’ora» sarà anche vero, ma non è la notizia.",
-    en: "Off the program, Uncle Jon can’t wait to go visit her: Stefano and Anita have had a baby girl, Nadia, and everyone who has seen her swears she’s the cutest in the world.",
+    why: "Qui la politica non c’entra: la notizia è Nadia, che però arriva solo alla fine. «Zio Jon non vede l’ora» sarà anche vero, ma non è la notizia.",
+    en: "Off the program, Uncle Jon can’t wait to go visit her: everyone who has seen her swears there is no cuter baby in the world, and she is Nadia, Stefano and Anita’s newborn daughter.",
     enA: "Nadia, the cutest baby",
-    enWhy: "Politics doesn’t come into it: the news is Nadia, who only shows up halfway through. The trap is “in the world,” accurate but too long; and “Uncle Jon can’t wait” may be true, but it isn’t the news."
+    enWhy: "Politics doesn’t come into it: the news is Nadia, who only shows up at the end. “Uncle Jon can’t wait” may be true, but it isn’t the news."
   }
 ];
 
-const KEY = "taglia-a-cinque-midterm-v6";
+const KEY = "taglia-a-cinque-midterm-v7";
 const norm = t => t.toLowerCase().replace(/[’‘]/g,"'").replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
 const clean = t => t.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
 
@@ -274,6 +274,12 @@ function render(){
     }
     grid.appendChild(row);
   }
+  grid.querySelectorAll(".tile").forEach(t => {
+    t.style.fontSize = "";
+    if (!t.textContent) return;
+    let px = parseFloat(getComputedStyle(t).fontSize);
+    while (t.scrollWidth > t.clientWidth && px > 8) { px -= 0.5; t.style.fontSize = px + "px"; }
+  });
 
   $("controls").style.display = s.done ? "none" : "flex";
   $("undo").disabled = sel.length === 0;
