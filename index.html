@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Taglia la frase a cinque: edizione midterm</title>
+<title>Taglia la frase a cinque parole: edizione midterm</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -95,7 +95,7 @@ h1 .cut::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:3p
 <body>
 <div class="wrap">
   <header>
-    <h1>Taglia <span class="cut">pure</span> la frase <span class="cut">troppo lunga</span> a cinque</h1>
+    <h1>Taglia la frase <span class="cut">troppo lunga</span> a cinque parole</h1>
     <div class="nav">
       <button id="prev" aria-label="Frase precedente">‹</button>
       <span id="label">Frase 1 di 7</span>
@@ -324,7 +324,7 @@ function renderEnd(){
 function copyResult(){
   const s = st();
   const map = { place:"🟩", in:"🟨", out:"⬛" };
-  const text = `Taglia la frase a cinque, midterm ${store.cur+1}: ${s.won ? s.g.length : "X"}/5\n` + s.g.map(r => r.r.map(x => map[x]).join("")).join("\n");
+  const text = `Taglia la frase a cinque parole, midterm ${store.cur+1}: ${s.won ? s.g.length : "X"}/5\n` + s.g.map(r => r.r.map(x => map[x]).join("")).join("\n");
   const fallback = () => {
     const ta = document.createElement("textarea");
     ta.className = "share-fallback"; ta.rows = 7; ta.value = text; ta.readOnly = true;
