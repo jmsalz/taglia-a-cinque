@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Taglia a cinque: edizione midterm</title>
+<title>Taglia la frase a cinque: edizione midterm</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -95,14 +95,14 @@ h1 .cut::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:3p
 <body>
 <div class="wrap">
   <header>
-    <h1>Taglia <span class="cut">tutto</span> a cinque</h1>
+    <h1>Taglia <span class="cut">pure</span> la frase <span class="cut">troppo lunga</span> a cinque</h1>
     <div class="nav">
       <button id="prev" aria-label="Frase precedente">‹</button>
       <span id="label">Frase 1 di 7</span>
       <button id="next" aria-label="Frase successiva">›</button>
     </div>
   </header>
-  <p class="lede">Edizione midterm, dai risultati del 3 novembre. Tocca cinque parole della frase, nell’ordine in cui vanno lette, in modo da conservarne il senso. Hai cinque tentativi.</p>
+  <p class="lede">Edizione midterm: le notizie del voto del 3 novembre e dei giorni successivi. Tocca cinque parole della frase, nell’ordine in cui vanno lette, in modo da conservarne il senso. Hai cinque tentativi.</p>
 
   <div class="game">
     <div id="left">
@@ -129,20 +129,20 @@ h1 .cut::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:3p
 <script>
 const PUZZLES = [
   {
-    s: "Martedì il controllo di Camera e Senato è passato ai democratici, che hanno strappato ai repubblicani sette seggi al Senato e più di due dozzine di distretti alla Camera, in una delle elezioni di metà mandato più squilibrate della storia moderna.",
+    s: "Con lo spoglio quasi concluso, il controllo di Camera e Senato è passato ai democratici, che hanno strappato ai repubblicani otto seggi al Senato e oltre quaranta distretti alla Camera, con quello che finora è il margine più ampio nel voto popolare in un'elezione di metà mandato dal 1974.",
     a: ["camera","e","senato","ai","democratici"], ad: "Camera e Senato ai democratici",
     alts: [],
-    why: "Le cifre dicono quanto è stata ampia la vittoria, ma il fatto su cui si regge tutto è il controllo di entrambe le camere. «Squilibrate» è una tentazione, ma resta un contorno.",
-    en: "On Tuesday, control of the House and Senate passed to the Democrats, who took seven Senate seats and more than two dozen House districts from Republicans in one of the most lopsided midterms in modern history.",
+    why: "Le cifre dicono quanto è stata ampia la vittoria, ma il fatto su cui si regge tutto è il controllo di entrambe le camere. Il record del 1974 è una tentazione, ma resta un contorno.",
+    en: "With the count nearly finished, control of the House and Senate has passed to the Democrats, who took eight Senate seats and more than forty House districts from Republicans, with what is so far the widest popular-vote margin in a midterm since 1974.",
     enA: "House and Senate to the Democrats",
-    enWhy: "The numbers show how big the win was, but control of both chambers is the fact everything hangs on. “Lopsided” is tempting, but it’s garnish."
+    enWhy: "The numbers show how big the win was, but control of both chambers is the fact everything hangs on. The 1974 record is tempting, but it’s garnish."
   },
   {
-    s: "Dopo quasi un secolo senza un senatore democratico, il Kansas ha eletto Adam Hamilton, uno dei sette seggi repubblicani strappati dai democratici dal Texas al Maine.",
+    s: "Dopo quasi un secolo senza un senatore democratico, il Kansas ha eletto Adam Hamilton, uno degli otto seggi repubblicani strappati dai democratici dal Texas al Maine.",
     a: ["kansas","democratico","dopo","un","secolo"], ad: "Kansas democratico dopo un secolo",
     alts: [["senatore","democratico","dopo","un","secolo"]],
     why: "Il trucco è che la risposta sta dentro una negazione: tieni «dopo» e «democratico», lasci «senza». Il secolo di attesa è la notizia; il nome del vincitore conta meno fuori dal Kansas.",
-    en: "After almost a century without a Democratic senator, Kansas elected Adam Hamilton, one of seven Republican seats Democrats took from Texas to Maine.",
+    en: "After almost a century without a Democratic senator, Kansas elected Adam Hamilton, one of eight Republican seats Democrats took from Texas to Maine.",
     enA: "Kansas Democratic after a century",
     enWhy: "The answer hides inside a negation: keep “after” and “Democratic,” drop “without.” The century-long wait is the news; the winner’s name matters less outside Kansas."
   },
@@ -156,44 +156,44 @@ const PUZZLES = [
     enWhy: "Two stories compete: a seat held after a brutal campaign, and a first in the Senate’s history. The second is the one people will still cite in fifty years."
   },
   {
-    s: "In Texas Ken Paxton è stato battuto da James Talarico, il primo democratico a vincere una carica statale lì da 32 anni, mentre il partito conquistava anche la Camera texana per la prima volta da oltre vent'anni.",
-    a: ["texas","paxton","battuto","da","talarico"], ad: "Texas, Paxton battuto da Talarico",
+    s: "In Mississippi, Stato vinto da Trump con 23 punti di vantaggio nel 2024, il democratico Scott Colom ha battuto di stretta misura la senatrice Cindy Hyde-Smith: sarà il primo senatore afroamericano eletto nello Stato dal 1874 e il primo democratico dal 1982.",
+    a: ["primo","senatore","afroamericano","dal","1874"], ad: "Primo senatore afroamericano dal 1874",
     alts: [],
-    why: "Il record dei 32 anni rende la vittoria notevole, ma in cinque parole non ci stanno insieme il record e lo Stato. I nomi bastano: chi ha seguito la corsa sa cosa significa Paxton battuto in Texas.",
-    en: "In Texas, Ken Paxton was beaten by James Talarico, the first Democrat to win statewide office there in 32 years, while the party also won the Texas House for the first time in over twenty years.",
-    enA: "Texas: Paxton beaten by Talarico",
-    enWhy: "The 32-year streak makes it remarkable, but five words can’t hold both the streak and the state. The names do the work: anyone following the race knows what Paxton losing Texas means."
+    why: "Due primati nella stessa frase, e la trappola è mescolarli: «primo democratico dal 1874» non è vero. Quello che resterà nei libri di storia è il primo: l’ultimo senatore afroamericano del Mississippi, Blanche Bruce, fu eletto durante la Ricostruzione.",
+    en: "In Mississippi, a state Trump won by 23 points in 2024, Democrat Scott Colom narrowly beat Senator Cindy Hyde-Smith: he will be the first Black senator elected from the state since 1874 and the first Democrat since 1982.",
+    enA: "First Black senator since 1874",
+    enWhy: "Two firsts in one sentence, and the trap is mixing them: “first Democrat since 1874” isn’t true. The one that goes in the history books is the first: Mississippi’s last Black senator, Blanche Bruce, was elected during Reconstruction."
   },
   {
-    s: "In Maine la repubblicana Susan Collins è stata battuta da Troy Jackson dopo quasi trent'anni al Senato, e il suo seggio va al primo democratico eletto dallo Stato dal 1995.",
-    a: ["maine","collins","battuta","dopo","trent'anni"], ad: "Maine, Collins battuta dopo trent’anni",
-    alts: [["collins","battuta","da","troy","jackson"]],
-    why: "«Battuta» basta a dire che il seggio era suo. I trent’anni sono ciò che la faceva sembrare intoccabile, ed è questo che fa notizia.",
-    en: "In Maine, Republican Susan Collins was beaten by Troy Jackson after nearly thirty years in the Senate, and her seat goes to the first Democrat the state has elected since 1995.",
-    enA: "Maine: Collins beaten after thirty years",
-    enWhy: "“Beaten” already says the seat was hers. The thirty years are what made her seem untouchable, and that’s the news."
-  },
-  {
-    s: "Mercoledì pomeriggio, con lo spoglio ancora in corso, i repubblicani non avevano strappato nemmeno un seggio ai democratici, che ne avevano già conquistati sette al Senato, almeno 24 distretti alla Camera e cinque governatori.",
-    a: ["repubblicani","nemmeno","un","seggio","strappato"], ad: "Repubblicani, nemmeno un seggio strappato",
+    s: "Dopo aver detto di essere «assolutamente disposto» ad accettare i risultati, Trump ora dubita del voto: lunedì ha chiesto sui social se qualcuno creda davvero che l'elezione sia stata onesta, rilanciando i sospetti sulle macchine per il voto.",
+    a: ["trump","ora","dubita","del","voto"], ad: "Trump ora dubita del voto",
     alts: [],
-    why: "Le conquiste democratiche compaiono in tutte le altre frasi; questa aggiunge che nulla è andato nella direzione opposta. La camicia blu ha continuato a schiaffeggiare, quella rossa non ne ha assestato nemmeno uno.",
-    en: "On Wednesday afternoon, with counting still underway, Republicans hadn’t taken a single seat from Democrats, who had already won seven Senate seats, at least 24 House districts and five governorships.",
-    enA: "Republicans: not a single seat taken",
-    enWhy: "Every other puzzle covers the Democratic gains; this one adds that nothing went the other way. Blue shirt kept slapping; red shirt never landed one."
+    why: "«Ora» è la parola che regge tutto: senza, si perde il voltafaccia rispetto ad «assolutamente disposto». Le macchine per il voto sono il pretesto, non la notizia.",
+    en: "After saying he was “absolutely willing” to accept the results, Trump now doubts the vote: on Monday he asked on social media whether anyone really believes the election was honest, reviving suspicions about voting machines.",
+    enA: "Trump now doubts the vote",
+    enWhy: "“Now” carries the whole thing: without it you lose the reversal from “absolutely willing.” The voting machines are the pretext, not the news."
   },
   {
-    s: "Quella delle midterm di martedì è stata una batosta per i repubblicani, che hanno perso entrambe le camere del Congresso, sette seggi al Senato e più di due dozzine di distretti alla Camera, in una disfatta dal Texas al Maine.",
+    s: "Quella delle midterm del 3 novembre è stata una batosta per i repubblicani, che hanno perso entrambe le camere del Congresso, otto seggi al Senato e oltre quaranta distretti alla Camera, in una disfatta dal Texas al Maine.",
     a: ["midterm","batosta","per","i","repubblicani"], ad: "Midterm, batosta per i repubblicani",
     alts: [["una","batosta","per","i","repubblicani"]],
     why: "«Batosta» porta già con sé la portata della sconfitta, quindi le cifre sono superflue. «Disfatta» dice la stessa cosa, ma «batosta» è la parola che sceglierebbe un titolista.",
-    en: "Tuesday’s midterms were a shellacking for Republicans, who lost both chambers of Congress, seven Senate seats and more than two dozen House districts in a rout from Texas to Maine.",
+    en: "The November 3 midterms were a shellacking for Republicans, who lost both chambers of Congress, eight Senate seats and more than forty House districts in a rout from Texas to Maine.",
     enA: "Midterms: shellacking for the Republicans",
     enWhy: "“Shellacking” already carries the scale, so the numbers are surplus. “Rout” says the same thing, but “shellacking” is the word a headline writer would pick."
+  },
+  {
+    s: "Fuori programma: la notizia più bella di tutte non arriva dall'America, perché a Stefano e Anita è nata Nadia, la bambina più carina del mondo, e lo zio Jon non vede l'ora di andarla a trovare.",
+    a: ["nadia","la","bambina","più","carina"], ad: "Nadia, la bambina più carina",
+    alts: [["zio","jon","non","vede","l'ora"]],
+    why: "Qui la politica non c’entra: la notizia è Nadia, e tutto il resto è contorno. La trappola è «del mondo», che sarebbe giustissimo ma non ci sta in cinque parole. Accettiamo anche «Zio Jon non vede l’ora», perché è vero.",
+    en: "Off the program: the best news of all doesn’t come from America, because Stefano and Anita have had Nadia, the cutest baby in the world, and Uncle Jon can’t wait to go visit her.",
+    enA: "Nadia, the cutest baby",
+    enWhy: "Politics doesn’t come into it: the news is Nadia, and everything else is garnish. The trap is “in the world,” which is entirely accurate but won’t fit in five words. “Uncle Jon can’t wait” is also accepted, because it’s true."
   }
 ];
 
-const KEY = "taglia-a-cinque-midterm-v1";
+const KEY = "taglia-a-cinque-midterm-v4";
 const norm = t => t.toLowerCase().replace(/[’‘]/g,"'").replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
 const clean = t => t.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,"");
 
@@ -318,7 +318,7 @@ function renderEnd(){
 function copyResult(){
   const s = st();
   const map = { place:"🟩", in:"🟨", out:"⬛" };
-  const text = `Taglia a cinque, midterm ${store.cur+1}: ${s.won ? s.g.length : "X"}/5\n` + s.g.map(r => r.r.map(x => map[x]).join("")).join("\n");
+  const text = `Taglia la frase a cinque, midterm ${store.cur+1}: ${s.won ? s.g.length : "X"}/5\n` + s.g.map(r => r.r.map(x => map[x]).join("")).join("\n");
   const fallback = () => {
     const ta = document.createElement("textarea");
     ta.className = "share-fallback"; ta.rows = 7; ta.value = text; ta.readOnly = true;
